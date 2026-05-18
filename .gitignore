@@ -15,6 +15,9 @@ build/
 # Database & logs (never commit real data)
 backend/data/
 backend/logs/
+backend/venv/
+backend/venv/*
+
 *.db
 *.sqlite
 *.log

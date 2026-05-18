@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: aisec-backend
+    restart: unless-stopped
+    environment:
+      - DEBUG=false
+      - SECRET_KEY=${SECRET_KEY:-change_me_in_prod_32_chars}
+      - NGINX_LOG_PATH=/var/log/nginx/access.log
+      - DATABASE_URL=sqlite+aiosqlite:///./data/security.db
+    ports:
+      - "8000:8000"          # Direct backend access for API testing
+    volumes:
+      - backend-data:/app/data
+      - backend-logs:/app/logs
+      - nginx-logs:/var/log/nginx:ro
+    networks:
+      - aisec-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: aisec-frontend
+    restart: unless-stopped
+    networks:
+      - aisec-net
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: aisec-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"              # Main entry point — serves everything
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - nginx-logs:/var/log/nginx
+    networks:
+      - aisec-net
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  backend-data:
+  backend-logs:
+  nginx-logs:
+
+networks:
+  aisec-net:
+    driver: bridge

@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.env
+*.egg-info/
+dist/
+build/
+
+# Database & logs (never commit real data)
+backend/data/
+backend/logs/
+*.db
+*.sqlite
+*.log
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+.npm
+
+# Docker
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Secrets
+.env
+.env.local
+.env.production
+*.pem
+*.key

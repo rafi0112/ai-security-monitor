@@ -1,112 +1,539 @@
 # 🛡️ AI Security Monitor
 
-> Real-time AI-powered security monitoring system — 100% free & open-source, runs fully locally.
+> AI-powered real-time security monitoring platform with automated DevSecOps pipeline, attack simulation, ML anomaly detection, Docker orchestration, and self-hosted CI/CD deployment.
 
-![Stack](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
-![Stack](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)
-![Stack](https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white)
-![Stack](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat&logo=github-actions&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white)
 
 ---
 
-## ✨ Features
+# 🚀 DevSecOps CI/CD Pipeline (Highest Priority)
 
-- 🔐 **Login page** with real-time AI analysis of every attempt
-- 🤖 **Two-layer AI detection**: rule-based (regex) + IsolationForest ML
-- 🚨 **Auto-blocking** of malicious IPs (SQLi, XSS, brute-force)
-- 📊 **Live dashboard** with charts, alerts, and stats (8s auto-refresh)
-- 🔬 **Attack simulator** — brute force, SQLi, XSS, DDoS, mixed scenarios
-- 🐳 **Fully dockerized** with Nginx reverse proxy
-- ⚙️ **CI/CD** via GitHub Actions
+This project includes a fully automated DevSecOps-style CI/CD pipeline using:
 
-## 🚀 Quick Start
+- GitHub Actions
+- Self-hosted GitHub Runner
+- Docker Compose
+- Automated security testing
+- Automated deployment
 
-### Option A — Local dev (no Docker)
+---
 
-```bash
-# Backend
-cd backend
-python -m venv venv && source venv/bin/activate   # Windows: .\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+## 🔄 CI/CD Workflow
 
-# Frontend (new terminal)
-cd frontend
-npm install
-npm run dev
+```text
+Developer Push
+       ↓
+GitHub Actions Triggered
+       ↓
+Backend Tests (pytest)
+       ↓
+Security Simulation Tests
+       ↓
+Frontend Build Validation
+       ↓
+Docker Build Validation
+       ↓
+Self-hosted Runner
+       ↓
+Automatic Local Deployment
+       ↓
+Docker Containers Restarted
 ```
 
-Open http://localhost:3000
+---
 
-### Option B — Docker Compose
+## ✅ CI Features
+
+### Automated Backend Testing
+- Pytest integration
+- Async security detector tests
+- Import validation
+- Dependency validation
+
+### Automated Frontend Validation
+- React build validation
+- npm dependency checks
+- Production build verification
+
+### Security-Aware CI
+The pipeline automatically simulates:
+
+- Brute-force attacks
+- SQL injection attempts
+- XSS payloads
+- High-risk login behavior
+
+Example:
+```python
+assert result.attack_type == "brute_force"
+assert result.should_block is True
+```
+
+---
+
+## 🚀 CD Features
+
+### Self-hosted Deployment Runner
+GitHub Actions deploys directly to the local machine using:
+
+```yaml
+runs-on: self-hosted
+```
+
+### Automatic Deployment Flow
+
+```text
+git push
+    ↓
+CI Tests Pass
+    ↓
+Docker Containers Rebuilt
+    ↓
+Containers Restart Automatically
+    ↓
+Application Updated
+```
+
+---
+
+## ⚙️ GitHub Actions Workflow
+
+Location:
+
+```text
+.github/workflows/ci.yml
+```
+
+Pipeline stages:
+
+| Stage | Purpose |
+|---|---|
+| test-backend | Backend validation |
+| test-frontend | Frontend validation |
+| docker-build | Docker verification |
+| deploy-local | Self-hosted deployment |
+
+---
+
+## 🖥️ Self-hosted Runner
+
+This project uses a self-hosted GitHub Actions runner for real CD deployment.
+
+Runner status:
+```text
+Listening for Jobs
+```
+
+Deployment machine:
+```text
+Windows Local Machine
+```
+
+---
+
+# 🐳 Docker Implementation
+
+The platform is fully containerized using Docker Compose.
+
+---
+
+## Docker Services
+
+| Container | Purpose |
+|---|---|
+| frontend | React dashboard |
+| backend | FastAPI API + ML engine |
+| nginx | Reverse proxy |
+| sqlite | Lightweight local database |
+
+---
+
+## Docker Workflow
+
+```text
+Frontend Container
+        ↓
+Nginx Reverse Proxy
+        ↓
+Backend API Container
+        ↓
+AI Security Detector
+        ↓
+SQLite Database
+```
+
+---
+
+## Start Containers
 
 ```bash
 docker compose up --build
 ```
 
-Open http://localhost
+---
 
-## 🧪 Test Credentials
+## Stop Containers
 
-| Username | Password | Result |
+```bash
+docker compose down
+```
+
+---
+
+## Automatic Deployment Script
+
+Location:
+
+```text
+scripts/deploy.bat
+```
+
+Responsibilities:
+- Pull latest code
+- Stop containers
+- Rebuild containers
+- Restart containers
+
+---
+
+# 🌐 Application URLs
+
+---
+
+## 🔐 Login Page
+
+```text
+http://localhost/login
+```
+
+Used for:
+- login testing
+- brute-force simulation
+- security event generation
+
+---
+
+## 📊 Dashboard
+
+```text
+http://localhost/dashboard
+```
+
+Features:
+- live alerts
+- attack analytics
+- charts
+- suspicious IP monitoring
+- attack simulation controls
+
+---
+
+## 📡 Swagger API Docs
+
+```text
+http://localhost:8000/docs
+```
+
+Interactive FastAPI API documentation.
+
+---
+
+# 📡 Main API Endpoints
+
+| Endpoint | Method | Purpose |
 |---|---|---|
-| `alice` | `alice_pass` | ✅ Success |
-| `admin` | `admin123` | ✅ Success |
-| `admin' OR '1'='1--` | anything | 🚨 SQLi CRITICAL |
-| Any user | wrong × 10 | 🔨 Brute Force CRITICAL |
+| `/login` | POST | User authentication |
+| `/api/alerts` | GET | Security alerts |
+| `/api/stats` | GET | Dashboard statistics |
+| `/api/logs` | GET | Security logs |
+| `/api/simulate/brute-force` | POST | Simulate brute-force |
+| `/api/simulate/sqli` | POST | Simulate SQL injection |
+| `/api/simulate/xss` | POST | Simulate XSS attack |
+| `/api/simulate/ddos` | POST | Simulate DDoS traffic |
 
-## 🔬 Simulate Attacks
+---
 
-**In dashboard:** Use the Attack Simulator panel buttons.
+# ✨ Features
 
-**CLI simulator (real HTTP requests):**
+- 🔐 Real-time login monitoring
+- 🤖 Hybrid AI detection engine
+- 🚨 Brute-force detection
+- 💉 SQL injection detection
+- 🧠 IsolationForest anomaly detection
+- 📊 Live security dashboard
+- 🐳 Fully Dockerized
+- ⚙️ Automated CI/CD
+- 🛡️ Self-hosted DevSecOps pipeline
+- 🔬 Attack simulator
+- 📈 Real-time statistics
+- 📜 Log monitoring system
+
+---
+
+# 🧠 AI/ML Detection Engine
+
+Two-layer detection architecture:
+
+---
+
+## Layer 1 — Rule-based Detection
+
+Detects:
+- SQL injection
+- XSS
+- Command injection
+- Path traversal
+- Brute-force attacks
+- Credential stuffing
+
+Uses:
+- regex pattern analysis
+- sliding window rate tracking
+
+---
+
+## Layer 2 — ML Anomaly Detection
+
+Algorithm:
+```text
+IsolationForest
+```
+
+Why IsolationForest?
+
+- Unsupervised learning
+- No labeled data required
+- Lightweight
+- CPU-friendly
+- Ideal for anomaly detection
+
+---
+
+## ML Feature Vector
+
+```text
+[
+  hour_of_day,
+  failures_last_60s,
+  unique_ips_last_5min,
+  is_known_bad_user,
+  has_sqli_pattern,
+  has_xss_pattern,
+  request_rate_last_60s,
+  payload_length
+]
+```
+
+---
+
+# 🔬 Attack Simulation
+
+The project supports realistic cyberattack simulation.
+
+---
+
+## Supported Attack Types
+
+| Attack | Supported |
+|---|---|
+| Brute Force | ✅ |
+| SQL Injection | ✅ |
+| XSS | ✅ |
+| DDoS-like traffic | ✅ |
+| Mixed attacks | ✅ |
+
+---
+
+## CLI Simulation
+
 ```bash
 python scripts/simulate_attacks.py --mode all
+
 python scripts/simulate_attacks.py --mode brute --attempts 25
+
 python scripts/simulate_attacks.py --mode sqli
+
 python scripts/simulate_attacks.py --mode ddos --attempts 80
 ```
 
-## 📁 Project Structure
+---
 
+# 🧪 Security Testing
+
+Security tests run automatically inside CI pipeline.
+
+---
+
+## Example Security Test
+
+```python
+@pytest.mark.asyncio
+async def test_bruteforce_detection():
+
+    detector = SecurityDetector()
+
+    for i in range(12):
+
+        event = LoginEvent(
+            ip_address="192.168.1.100",
+            username="admin",
+            success=False,
+        )
+
+        result = await detector.analyze_login(event)
+
+    assert result.attack_type == "brute_force"
 ```
+
+---
+
+# 📁 Project Structure
+
+```text
 ai-security-monitor/
-├── backend/              # FastAPI + ML
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── backend/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   ├── pytest.ini
+│   │
 │   ├── app/
-│   │   ├── api/          # auth, logs, alerts, stats, simulate
-│   │   ├── core/         # config, database
-│   │   ├── ml/           # IsolationForest detector
-│   │   └── services/     # log monitor background service
-│   └── requirements.txt
-├── frontend/             # React + Tailwind + Recharts
+│   │   ├── api/
+│   │   ├── core/
+│   │   ├── ml/
+│   │   ├── services/
+│   │   └── utils/
+│   │
+│   ├── tests/
+│   │   ├── test_basic.py
+│   │   ├── test_security_detector.py
+│   │   ├── test_sqli.py
+│   │   └── test_simulation.py
+│   │
+│   └── logs/
+│
+├── frontend/
+│   ├── Dockerfile
+│   ├── nginx.conf
 │   └── src/
-│       ├── pages/        # LoginPage, DashboardPage
-│       ├── components/   # StatCard, Charts, AlertsPanel, etc.
-│       ├── hooks/        # usePolling
-│       └── services/     # api.js (axios)
-├── nginx/                # Reverse proxy config
-├── scripts/              # Attack simulator CLI
+│       ├── pages/
+│       ├── components/
+│       ├── hooks/
+│       └── services/
+│
+├── nginx/
+│   └── nginx.conf
+│
+├── scripts/
+│   ├── deploy.bat
+│   └── simulate_attacks.py
+│
 └── docker-compose.yml
 ```
 
-## 🏗️ Architecture
+---
 
+# 🏗️ Architecture
+
+```text
+Browser
+   ↓
+Nginx Reverse Proxy
+   ↓
+FastAPI Backend
+   ↓
+AI Security Detector
+   ↓
+SQLite Database
+
+Nginx Logs
+   ↓
+Log Monitor Service
+   ↓
+AI Detection Engine
+   ↓
+Dashboard Alerts
 ```
-Browser → Nginx (rate-limit) → FastAPI → ML Detector → SQLite
-                ↓
-           Nginx Logs → Log Monitor → ML Detector
-```
 
-**Detection layers:**
-1. Rule-based: regex patterns for SQLi, XSS, command injection, path traversal
-2. ML: IsolationForest on 8-dimensional feature vector (unsupervised, no labels needed)
+---
 
-## 📡 API Docs
+# 🛣️ Roadmap
 
-FastAPI auto-docs: http://localhost:8000/api/docs
+## Phase 1 — Local DevSecOps Platform ✅
+- FastAPI backend
+- React dashboard
+- Docker containers
+- Security detector
+- CI/CD pipeline
+- Self-hosted deployment
 
-## 🛣️ Roadmap
+---
 
-- **Phase 1** ✅ — Local MVP (this repo)
-- **Phase 2** — Real Nginx logs, Random Forest, WebSockets, PostgreSQL
-- **Phase 3** — Kubernetes, Kafka, Elasticsearch, MLflow, Grafana
+## Phase 2 — Advanced Monitoring
+- Real Nginx log ingestion
+- WebSockets
+- PostgreSQL
+- Advanced analytics
+- RandomForest/XGBoost
+
+---
+
+## Phase 3 — Cloud Native Security
+- Kubernetes
+- Helm
+- Grafana
+- Prometheus
+- Kafka
+- Elasticsearch
+
+---
+
+## Phase 4 — Enterprise AI Security
+- MLflow
+- Explainable AI
+- Distributed detection
+- Multi-node deployment
+- Cloud-native scaling
+
+---
+
+# 🧑‍💻 Tech Stack
+
+| Category | Technology |
+|---|---|
+| Frontend | React + Tailwind |
+| Backend | FastAPI |
+| AI/ML | scikit-learn |
+| Database | SQLite |
+| DevOps | Docker + GitHub Actions |
+| Reverse Proxy | Nginx |
+| Testing | Pytest |
+| CI/CD | GitHub Actions + Self-hosted Runner |
+
+---
+
+# 📜 License
+
+MIT License
+
+---
+
+# ⭐ Project Goal
+
+This project was built to demonstrate:
+
+- DevSecOps
+- AI Security Monitoring
+- ML-based anomaly detection
+- Automated CI/CD
+- Docker orchestration
+- Security-aware testing
+- Real-world infrastructure workflows
